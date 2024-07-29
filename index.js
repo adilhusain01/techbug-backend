@@ -4,6 +4,7 @@ import express from 'express';
 import connectDB from './config/dbConn.js';
 import mongoose from 'mongoose';
 
+//Route Imports
 import cardRoute from './routes/cardRoute.js';
 import testimonialRoute from './routes/testimonialRoute.js';
 import contactRoute from './routes/contactRoute.js';
@@ -16,10 +17,12 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use('/api/v1/cards', cardRoute);
-app.use('/api/v1/testimonials', testimonialRoute);
-app.use('/api/v1/contact', contactRoute);
-app.use('/api/v1/auth', authRoute);
+app.use(express.urlencoded({ extended: false }));
+
+app.use('/v1/api/cards', cardRoute);
+app.use('/v1/api/testimonials', testimonialRoute);
+app.use('/v1/api/contact', contactRoute);
+app.use('/v1/api/auth', authRoute);
 
 mongoose.connection.once('open', () => {
   console.log(`Connected to mongoDB`);
