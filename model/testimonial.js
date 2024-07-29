@@ -1,31 +1,27 @@
 import mongoose from 'mongoose';
 
-const contactSchema = new mongoose.Schema({
+const testimonialSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
 
-  email: {
+  designation: {
     type: String,
     required: true,
   },
 
-  phone: {
+  image_uri: {
     type: String,
     required: true,
   },
 
-  company: {
-    type: String,
-  },
-
-  message: {
+  review: {
     type: String,
     required: true,
   },
 });
 
-const Contact = mongoose.model('Contact', contactSchema);
+const Testimonial = mongoose.model('Testimonial', testimonialSchema);
 
-export default Contact;
+export default Testimonial;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const cardSchema = new mongoose.Schema({
   title: {
@@ -6,7 +6,7 @@ const cardSchema = new mongoose.Schema({
     required: true,
   },
 
-  imageuri: {
+  image_uri: {
     type: String,
     required: true,
   },
@@ -19,4 +19,4 @@ const cardSchema = new mongoose.Schema({
 
 const Card = mongoose.model('Card', cardSchema);
 
-module.exports = Card;
+export default Card;
