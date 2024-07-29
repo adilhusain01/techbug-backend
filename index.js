@@ -4,9 +4,13 @@ const mongoose = require('mongoose');
 const PORT = 8000;
 const app = express();
 
-app.get('/', (req, res) => {
+app.get('/v1/api', (req, res) => {
   res.end('This is the endpoint');
 });
+
+// app.get('/v1/api/cards', (req, res) => {
+//   const cards =
+// })
 
 const start = () => {
   mongoose
