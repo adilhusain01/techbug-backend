@@ -1,16 +1,17 @@
-const express = require('express');
-const mongoose = require('mongoose');
+import express from 'express';
+import mongoose from 'mongoose';
+import homeRoutes from './routes/home.route.js';
+import contactRoutes from './routes/contact.route.js';
+import authRoutes from './routes/auth.route.js';
+
 
 const PORT = 8000;
 const app = express();
+app.use(express.json());
+app.use("/api/home",homeRoutes);
+app.use("/api/contact",contactRoutes);
+app.use("/api/auth", authRoutes);
 
-app.get('/v1/api', (req, res) => {
-  res.end('This is the endpoint');
-});
-
-// app.get('/v1/api/cards', (req, res) => {
-//   const cards =
-// })
 
 const start = () => {
   mongoose
