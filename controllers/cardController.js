@@ -58,6 +58,7 @@ export const updateCard = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 export const deleteCard = async (req, res) => {
   try {
     const { id } = req.params;
@@ -68,7 +69,7 @@ export const deleteCard = async (req, res) => {
       return res.status(404).json({ message: 'Card not found' });
     }
 
-    res.status(204).json(); // No content to send back for successful deletion
+    res.status(204).json();
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });

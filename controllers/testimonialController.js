@@ -71,7 +71,7 @@ export const deleteTestimonial = async (req, res) => {
       return res.status(404).json({ message: 'Testimonial not found' });
     }
 
-    res.status(204).json(); // No content to send back for successful deletion
+    res.status(204).json();
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });

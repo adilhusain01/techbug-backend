@@ -12,7 +12,7 @@ import testimonialRoute from './routes/testimonialRoute.js';
 import contactRoute from './routes/contactRoute.js';
 import authRoute from './routes/authRoute.js';
 
-const PORT = 8080 || process.env.PORT;
+const PORT = 8000 || process.env.PORT;
 
 connectDB();
 

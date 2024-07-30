@@ -1,9 +1,15 @@
 import express from 'express';
-import { getCards } from '../controllers/cardController.js';
-import { addCard } from '../controllers/cardController.js';
+import {
+  getCards,
+  addCard,
+  updateCard,
+  deleteCard,
+} from '../controllers/cardController.js';
 
 const router = express.Router();
 
 router.route('/').get(getCards).post(addCard);
+
+router.route('/:id').put(updateCard).delete(deleteCard);
 
 export default router;

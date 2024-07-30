@@ -1,5 +1,20 @@
 import Contact from '../model/contact.js';
 
+export const getContacts = async (req, res) => {
+  try {
+    const contacts = await Contact.find();
+
+    if (!contacts.length) {
+      return res.status(204).json({ message: 'No contacts found' });
+    }
+
+    res.json(contacts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 export const makeContact = async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
@@ -22,5 +37,22 @@ export const makeContact = async (req, res) => {
     res.json(savedContact);
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const deleteContact = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedContact = await Contact.findByIdAndDelete(id);
+
+    if (!deletedContact) {
+      return res.status(404).json({ message: 'Contact not found' });
+    }
+
+    res.status(204).json();
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };

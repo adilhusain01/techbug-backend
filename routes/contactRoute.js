@@ -1,8 +1,14 @@
 import express from 'express';
-import { makeContact } from '../controllers/contactController.js';
+import {
+  makeContact,
+  getContacts,
+  deleteContact,
+} from '../controllers/contactController.js';
 
 const router = express.Router();
 
-router.route('/').post(makeContact);
+router.route('/').get(getContacts).post(makeContact);
+
+router.delete('/:id', deleteContact);
 
 export default router;
