@@ -38,3 +38,42 @@ export const addTestimonial = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+export const updateTestimonial = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, designation, image_uri, review } = req.body;
+
+    const updatedTestimonial = await Testimonial.findByIdAndUpdate(
+      id,
+      { name, designation, image_uri, review },
+      { new: true, runValidators: true } // Return the updated document and run validation
+    );
+
+    if (!updatedTestimonial) {
+      return res.status(404).json({ message: 'Testimonial not found' });
+    }
+
+    res.json(updatedTestimonial);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+export const deleteTestimonial = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedTestimonial = await Testimonial.findByIdAndDelete(id);
+
+    if (!deletedTestimonial) {
+      return res.status(404).json({ message: 'Testimonial not found' });
+    }
+
+    res.status(204).json(); // No content to send back for successful deletion
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};

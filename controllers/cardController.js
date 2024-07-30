@@ -36,3 +36,41 @@ export const addCard = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+export const updateCard = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, image_uri, description } = req.body;
+
+    const updatedCard = await Card.findByIdAndUpdate(
+      id,
+      { title, image_uri, description },
+      { new: true, runValidators: true } // Return the updated document and run validation
+    );
+
+    if (!updatedCard) {
+      return res.status(404).json({ message: 'Card not found' });
+    }
+
+    res.json(updatedCard);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+export const deleteCard = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedCard = await Card.findByIdAndDelete(id);
+
+    if (!deletedCard) {
+      return res.status(404).json({ message: 'Card not found' });
+    }
+
+    res.status(204).json(); // No content to send back for successful deletion
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
