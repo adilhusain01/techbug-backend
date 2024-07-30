@@ -4,12 +4,17 @@ import fs from 'fs';
 import { promises as fsPromises } from 'fs';
 import path from 'path';
 
+// Utility function to get the directory name of the current module
+const getDirname = () => {
+  return path.dirname(new URL(import.meta.url).pathname);
+};
+
 const logEvents = async (message, logName) => {
   const dateTime = `${format(new Date(), 'yyyyMMdd\tHH:mm:ss')}`;
   const logItem = `${dateTime}\t${uuid()}\t${message}\n`;
 
   try {
-    const logsDir = path.join(__dirname, '..', 'logs');
+    const logsDir = path.join(getDirname(), '..', 'logs');
     if (!fs.existsSync(logsDir)) {
       await fsPromises.mkdir(logsDir);
     }
