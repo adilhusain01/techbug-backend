@@ -4,7 +4,8 @@ export const getCards = async (req, res) => {
   try {
     const cards = await Card.find();
 
-    if (!cards.length) res.status(204).json({ message: 'No cards found' });
+    if (!cards.length)
+      return res.status(204).json({ message: 'No cards found' });
 
     res.json(cards);
   } catch (error) {
@@ -17,11 +18,10 @@ export const addCard = async (req, res) => {
   try {
     const { title, image_uri, description } = req.body;
 
-    if (!title || !image_uri || !description) {
-      res
+    if (!title || !image_uri || !description)
+      return res
         .status(400)
-        .json({ message: 'Title, Image_uri and Description are required' });
-    }
+        .json({ message: 'title, image_uri and description are required' });
 
     const newCard = new Card({
       title,
@@ -30,7 +30,7 @@ export const addCard = async (req, res) => {
     });
 
     const savedCard = await newCard.save();
-    res.status(200).json(savedCard);
+    res.status(201).json(savedCard);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -65,9 +65,8 @@ export const deleteCard = async (req, res) => {
 
     const deletedCard = await Card.findByIdAndDelete(id);
 
-    if (!deletedCard) {
+    if (!deletedCard)
       return res.status(404).json({ message: 'Card not found' });
-    }
 
     res.status(204).json();
   } catch (error) {

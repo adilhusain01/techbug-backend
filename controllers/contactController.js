@@ -4,9 +4,8 @@ export const getContacts = async (req, res) => {
   try {
     const contacts = await Contact.find();
 
-    if (!contacts.length) {
+    if (!contacts.length)
       return res.status(204).json({ message: 'No contacts found' });
-    }
 
     res.json(contacts);
   } catch (error) {
@@ -21,9 +20,9 @@ export const makeContact = async (req, res) => {
     const { company } = req.body;
 
     if (!name || !email || !phone || !message)
-      res
+      return res
         .status(204)
-        .json({ message: 'Name, Email, Phone and Message are required' });
+        .json({ message: 'name, email, phone and message are required' });
 
     const newContact = new Contact({
       name,
@@ -34,9 +33,10 @@ export const makeContact = async (req, res) => {
     });
 
     const savedContact = await newContact.save();
-    res.json(savedContact);
+    res.status(201).json(savedContact);
   } catch (error) {
     console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
@@ -46,9 +46,8 @@ export const deleteContact = async (req, res) => {
 
     const deletedContact = await Contact.findByIdAndDelete(id);
 
-    if (!deletedContact) {
+    if (!deletedContact)
       return res.status(404).json({ message: 'Contact not found' });
-    }
 
     res.status(204).json();
   } catch (error) {

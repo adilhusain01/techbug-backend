@@ -5,7 +5,7 @@ export const getTestimonials = async (req, res) => {
     const testimonials = await Testimonial.find();
 
     if (!testimonials.length)
-      res.status(204).json({ message: 'No testimonials found' });
+      return res.status(204).json({ message: 'No testimonials found' });
 
     res.json(testimonials);
   } catch (error) {
@@ -18,11 +18,10 @@ export const addTestimonial = async (req, res) => {
   try {
     const { name, designation, image_uri, review } = req.body;
 
-    if (!name || !designation || !image_uri || !review) {
-      res.status(400).json({
-        message: 'Name, Designation, Image_uri and Review are required',
+    if (!name || !designation || !image_uri || !review)
+      return res.status(400).json({
+        message: 'name, designation, image_uri and review are required',
       });
-    }
 
     const newTestimonial = new Testimonial({
       name,
@@ -32,7 +31,7 @@ export const addTestimonial = async (req, res) => {
     });
 
     const savedTestimonial = await newTestimonial.save();
-    res.status(200).json(savedTestimonial);
+    res.status(201).json(savedTestimonial);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -50,9 +49,8 @@ export const updateTestimonial = async (req, res) => {
       { new: true, runValidators: true } // Return the updated document and run validation
     );
 
-    if (!updatedTestimonial) {
+    if (!updatedTestimonial)
       return res.status(404).json({ message: 'Testimonial not found' });
-    }
 
     res.json(updatedTestimonial);
   } catch (error) {
@@ -67,9 +65,8 @@ export const deleteTestimonial = async (req, res) => {
 
     const deletedTestimonial = await Testimonial.findByIdAndDelete(id);
 
-    if (!deletedTestimonial) {
+    if (!deletedTestimonial)
       return res.status(404).json({ message: 'Testimonial not found' });
-    }
 
     res.status(204).json();
   } catch (error) {
