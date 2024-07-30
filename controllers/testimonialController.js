@@ -14,7 +14,7 @@ export const getTestimonials = async (req, res) => {
   }
 };
 
-export const addTestimonial = async (req, res) => {
+export const createTestimonial = async (req, res) => {
   try {
     const { name, designation, image_uri, review } = req.body;
 
@@ -68,7 +68,7 @@ export const deleteTestimonial = async (req, res) => {
     if (!deletedTestimonial)
       return res.status(404).json({ message: 'Testimonial not found' });
 
-    res.status(204).json();
+    res.status(204).json({ message: 'Testimonial deleted successfully' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });

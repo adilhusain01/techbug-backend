@@ -14,7 +14,7 @@ export const getContacts = async (req, res) => {
   }
 };
 
-export const makeContact = async (req, res) => {
+export const createContact = async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
     const { company } = req.body;
@@ -49,7 +49,7 @@ export const deleteContact = async (req, res) => {
     if (!deletedContact)
       return res.status(404).json({ message: 'Contact not found' });
 
-    res.status(204).json();
+    res.status(204).json({ message: 'Contact deleted successfully' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });

@@ -1,13 +1,13 @@
 import express from 'express';
 import {
-  makeContact,
+  createContact,
   getContacts,
   deleteContact,
 } from '../controllers/contactController.js';
 
 const router = express.Router();
 
-router.route('/').get(getContacts).post(makeContact);
+router.route('/').get(getContacts).post(createContact);
 
 router.delete('/:id', deleteContact);
 

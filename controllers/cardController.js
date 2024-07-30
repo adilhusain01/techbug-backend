@@ -14,7 +14,7 @@ export const getCards = async (req, res) => {
   }
 };
 
-export const addCard = async (req, res) => {
+export const createCard = async (req, res) => {
   try {
     const { title, image_uri, description } = req.body;
 
@@ -68,7 +68,7 @@ export const deleteCard = async (req, res) => {
     if (!deletedCard)
       return res.status(404).json({ message: 'Card not found' });
 
-    res.status(204).json();
+    res.status(204).json({ message: 'Card deleted successfully' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });
