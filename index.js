@@ -3,6 +3,7 @@ dotenv.config();
 import connectDB from './config/dbConn.js';
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 //Route Imports
 import cardRoute from './routes/cardRoute.js';
@@ -11,6 +12,8 @@ import contactRoute from './routes/contactRoute.js';
 import authRoute from './routes/authRoute.js';
 
 const PORT = 8080 || process.env.PORT;
+
+app.use(cors);
 
 connectDB();
 
