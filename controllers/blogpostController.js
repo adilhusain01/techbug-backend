@@ -78,9 +78,15 @@ export const updateBlogpost = async (req, res) => {
       return res.status(400).json({ message: 'ID is required' });
     }
 
+    const slug = updates.title
+      .split(' ')
+      .join('-')
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9-]/g, '-');
+
     const updatedBlogpost = await Blogpost.findByIdAndUpdate(
       id,
-      { ...updates, updatedAt: new Date() },
+      { ...updates, slug, updatedAt: new Date() },
       {
         new: true,
         runValidators: true,
