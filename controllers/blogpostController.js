@@ -34,14 +34,20 @@ export const getBlogpostById = async (req, res) => {
 
 export const createBlogpost = async (req, res) => {
   try {
-    const { title, description, author, thumbnail, content, images_uri, tag } =
+    const { title, description, author, thumbnail, content, images_uri, tags } =
       req.body;
 
-    if (!title || !description || !author || !thumbnail || !content || !tag)
+    if (!title || !description || !author || !thumbnail || !content)
       return res.status(400).json({
         message:
-          'title, description, author, thumbnail, content and tag are required',
+          'title, description, author, thumbnail and content are required',
       });
+
+    const slug = title
+      .split(' ')
+      .join('-')
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9-]/g, '-');
 
     const newBlogpost = new Blogpost({
       title,
@@ -50,7 +56,8 @@ export const createBlogpost = async (req, res) => {
       thumbnail,
       content,
       images_uri,
-      tag,
+      tags,
+      slug,
     });
 
     const savedBlogpost = await newBlogpost.save();
@@ -71,10 +78,17 @@ export const updateBlogpost = async (req, res) => {
       return res.status(400).json({ message: 'ID is required' });
     }
 
-    const updatedBlogpost = await Blogpost.findByIdAndUpdate(id, updates, {
-      new: true,
-      runValidators: true,
-    });
+    const updatedAt = Date.now;
+
+    const updatedBlogpost = await Blogpost.findByIdAndUpdate(
+      id,
+      updates,
+      updatedAt,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     if (!updatedBlogpost)
       return res.status(404).json({ message: 'Blogpost not found' });

@@ -19,11 +19,6 @@ const blogpostSchema = new mongoose.Schema({
     trim: true,
   },
 
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
-
   thumbnail: {
     type: String,
     required: true,
@@ -42,10 +37,27 @@ const blogpostSchema = new mongoose.Schema({
     },
   ],
 
-  tag: {
+  tags: [
+    {
+      type: String,
+      trim: true,
+    },
+  ],
+
+  slug: {
     type: String,
-    trim: true,
     required: true,
+    trim: true,
+  },
+
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+
+  updatedAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 
