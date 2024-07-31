@@ -78,12 +78,9 @@ export const updateBlogpost = async (req, res) => {
       return res.status(400).json({ message: 'ID is required' });
     }
 
-    const updatedAt = Date.now;
-
     const updatedBlogpost = await Blogpost.findByIdAndUpdate(
       id,
-      updates,
-      updatedAt,
+      { ...updates, updatedAt: new Date() },
       {
         new: true,
         runValidators: true,
