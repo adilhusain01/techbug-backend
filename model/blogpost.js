@@ -30,19 +30,15 @@ const blogpostSchema = new mongoose.Schema({
     required: true,
   },
 
-  images_uri: [
-    {
-      type: String,
-      trim: true,
-    },
-  ],
+  images_uri: {
+    type: [String],
+    trim: true,
+  },
 
-  tags: [
-    {
-      type: String,
-      trim: true,
-    },
-  ],
+  tags: {
+    type: [String],
+    trim: true,
+  },
 
   slug: {
     type: String,
