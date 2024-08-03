@@ -11,6 +11,7 @@ import cardRoute from './routes/cardRoute.js';
 import testimonialRoute from './routes/testimonialRoute.js';
 import contactRoute from './routes/contactRoute.js';
 import serviceRoute from './routes/serviceRoute.js';
+import workRoute from './routes/workRoute.js';
 import authRoute from './routes/authRoute.js';
 import blogpostRoute from './routes/blogpostRoute.js';
 
@@ -31,6 +32,7 @@ app.use('/v1/api/cards', cardRoute);
 app.use('/v1/api/testimonials', testimonialRoute);
 app.use('/v1/api/contact', contactRoute);
 app.use('/v1/api/services', serviceRoute);
+app.use('/v1/api/works', workRoute);
 app.use('/v1/api/blogposts', blogpostRoute);
 app.use('/v1/api/auth', authRoute);
 
