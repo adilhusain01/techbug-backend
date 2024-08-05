@@ -30,16 +30,18 @@ export const getBlogpostsMeta = async (req, res) => {
 
 export const getBlogpostMetaByTag = async (req, res) => {
   try {
-    const { tags } = req.body;
+    const { tags } = req.params;
 
-    if (!tags || !Array.isArray(tags) || tags.length === 0) {
+    if (!tags || typeof tags !== 'string' || tags.trim() === '') {
       return res.status(400).json({
-        message: 'Tags are required and should be an array',
+        message: 'Tags are required and should be a non-empty string',
       });
     }
 
+    const tagsArray = tags.split('-');
+
     const posts = await Blogpost.find(
-      { tags: { $in: tags } },
+      { tags: { $in: tagsArray } },
       'thumbnail title author updatedAt slug'
     );
 

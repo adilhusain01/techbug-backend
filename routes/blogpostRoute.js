@@ -22,6 +22,7 @@ router
 
 router.route('/posts/slug/:slug').get(getBlogpostBySlug);
 
-router.route('/meta').get(getBlogpostsMeta).post(getBlogpostMetaByTag);
+router.get('/meta', getBlogpostsMeta);
+router.get('/meta/:tags', getBlogpostMetaByTag);
 
 export default router;
