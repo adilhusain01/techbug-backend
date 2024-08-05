@@ -2,12 +2,12 @@ import Blogpost from '../model/blogpost.js';
 
 export const getBlogposts = async (req, res) => {
   try {
-    const Blogposts = await Blogpost.find();
+    const posts = await Blogpost.find();
 
-    if (!Blogposts.length)
+    if (!posts.length)
       return res.status(404).json({ message: 'No blog posts found' });
 
-    res.json(Blogposts);
+    res.json(posts);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -20,12 +20,11 @@ export const getBlogpostById = async (req, res) => {
 
     if (!id) return res.status(400).json({ message: 'ID is required' });
 
-    const Blogpost = await Blogpost.findById(id);
+    const post = await Blogpost.findById(id);
 
-    if (!Blogpost)
-      return res.status(404).json({ message: 'Blog post not found' });
+    if (!post) return res.status(404).json({ message: 'Blog post not found' });
 
-    res.json(Blogpost);
+    res.json(post);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -47,7 +46,7 @@ export const createBlogpost = async (req, res) => {
       .toLowerCase()
       .replace(/[^a-zA-Z0-9-]/g, '-');
 
-    const newBlogpost = new Blogpost({
+    const newPost = new Blogpost({
       title,
       description,
       author,
@@ -57,9 +56,9 @@ export const createBlogpost = async (req, res) => {
       slug,
     });
 
-    const savedBlogpost = await newBlogpost.save();
+    const savedPost = await newPost.save();
 
-    res.status(201).json(savedBlogpost);
+    res.status(201).json(savedPost);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -83,7 +82,7 @@ export const updateBlogpost = async (req, res) => {
           .replace(/[^a-zA-Z0-9-]/g, '-')
       : undefined;
 
-    const updatedBlogpost = await Blogpost.findByIdAndUpdate(
+    const updatedPost = await Blogpost.findByIdAndUpdate(
       id,
       { ...updates, slug, updatedAt: new Date() },
       {
@@ -92,10 +91,10 @@ export const updateBlogpost = async (req, res) => {
       }
     );
 
-    if (!updatedBlogpost)
+    if (!updatedPost)
       return res.status(404).json({ message: 'Blog post not found' });
 
-    res.json(updatedBlogpost);
+    res.json(updatedPost);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -110,9 +109,9 @@ export const deleteBlogpost = async (req, res) => {
       return res.status(400).json({ message: 'ID is required' });
     }
 
-    const deletedBlogpost = await Blogpost.findByIdAndDelete(id);
+    const deletedPost = await Blogpost.findByIdAndDelete(id);
 
-    if (!deletedBlogpost)
+    if (!deletedPost)
       return res.status(404).json({ message: 'Blog post not found' });
 
     res.status(204).json({ message: 'Blog post deleted successfully' });
