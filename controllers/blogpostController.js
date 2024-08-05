@@ -2,14 +2,14 @@ import Blogpost from '../model/blogpost.js';
 
 export const getBlogposts = async (req, res) => {
   try {
-    const blogposts = await Blogpost.find();
+    const Blogposts = await Blogpost.find();
 
-    if (!blogposts.length)
-      return res.status(404).json({ message: 'Blogpost not found' });
+    if (!Blogposts.length)
+      return res.status(404).json({ message: 'No blog posts found' });
 
-    res.json(blogposts);
+    res.json(Blogposts);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -20,27 +20,25 @@ export const getBlogpostById = async (req, res) => {
 
     if (!id) return res.status(400).json({ message: 'ID is required' });
 
-    const foundBlogpost = await Blogpost.findById(id);
+    const Blogpost = await Blogpost.findById(id);
 
-    if (!foundBlogpost)
-      return res.status(404).json({ message: 'Blogpost not found' });
+    if (!Blogpost)
+      return res.status(404).json({ message: 'Blog post not found' });
 
-    res.json(foundBlogpost);
+    res.json(Blogpost);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
 
 export const createBlogpost = async (req, res) => {
   try {
-    const { title, description, author, thumbnail, content, images_uri, tags } =
-      req.body;
+    const { title, description, author, thumbnail, tags, body } = req.body;
 
-    if (!title || !description || !author || !thumbnail || !content)
+    if (!title || !description || !author || !thumbnail || !body)
       return res.status(400).json({
-        message:
-          'title, description, author, thumbnail and content are required',
+        message: 'Title, description, author, thumbnail, and body are required',
       });
 
     const slug = title
@@ -54,9 +52,8 @@ export const createBlogpost = async (req, res) => {
       description,
       author,
       thumbnail,
-      content,
-      images_uri,
       tags,
+      body,
       slug,
     });
 
@@ -64,8 +61,8 @@ export const createBlogpost = async (req, res) => {
 
     res.status(201).json(savedBlogpost);
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -79,10 +76,12 @@ export const updateBlogpost = async (req, res) => {
     }
 
     const slug = updates.title
-      .split(' ')
-      .join('-')
-      .toLowerCase()
-      .replace(/[^a-zA-Z0-9-]/g, '-');
+      ? updates.title
+          .split(' ')
+          .join('-')
+          .toLowerCase()
+          .replace(/[^a-zA-Z0-9-]/g, '-')
+      : undefined;
 
     const updatedBlogpost = await Blogpost.findByIdAndUpdate(
       id,
@@ -94,11 +93,11 @@ export const updateBlogpost = async (req, res) => {
     );
 
     if (!updatedBlogpost)
-      return res.status(404).json({ message: 'Blogpost not found' });
+      return res.status(404).json({ message: 'Blog post not found' });
 
     res.json(updatedBlogpost);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -114,11 +113,11 @@ export const deleteBlogpost = async (req, res) => {
     const deletedBlogpost = await Blogpost.findByIdAndDelete(id);
 
     if (!deletedBlogpost)
-      return res.status(404).json({ message: 'Blogpost not found' });
+      return res.status(404).json({ message: 'Blog post not found' });
 
-    res.status(204).json({ message: 'Blogpost deleted successfully' });
+    res.status(204).json({ message: 'Blog post deleted successfully' });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };

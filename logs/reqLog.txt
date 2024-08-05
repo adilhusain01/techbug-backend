@@ -39,3 +39,4 @@
 20240730	15:41:09	df114af0-842d-4546-a8dc-5755a808f8a2	GET	undefined	/v1/api/blogposts/66a8b69eaf2e7a5ba3455e6a
 20240731	09:50:31	2c55c944-aa88-4f1f-95f7-f1357a6ebdf2	PUT	undefined	/v1/api/blogposts/66a9ba443f284718567060f6
 20240731	09:51:29	37fcf970-9ff4-4190-ac08-c908a4e9a77b	PUT	undefined	/v1/api/blogposts/66a9ba443f284718567060f6
+20240805	07:57:52	8478d6a8-b4cb-438f-993d-c346b45d1291	POST	undefined	/v1/api/blogposts
