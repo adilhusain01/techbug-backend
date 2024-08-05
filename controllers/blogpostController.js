@@ -40,6 +40,12 @@ export const createBlogpost = async (req, res) => {
         message: 'Title, description, author, thumbnail, and body are required',
       });
 
+    const existingPost = await Blogpost.findOne({ title });
+    if (existingPost)
+      return res.status(400).json({
+        message: 'A blog post with this title already exists',
+      });
+
     const slug = title
       .split(' ')
       .join('-')
