@@ -72,7 +72,7 @@ export const getBlogpostBySlug = async (req, res) => {
 
     if (!slug) return res.status(400).json({ message: 'Slug is required' });
 
-    const post = await Blogpost.findByOne({ slug: slug });
+    const post = await Blogpost.findByOne(slug);
 
     if (!post) return res.status(404).json({ message: 'Blog post not found' });
 
