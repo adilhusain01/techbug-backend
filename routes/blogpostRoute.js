@@ -19,6 +19,8 @@ router
   .put(updateBlogpost)
   .delete(deleteBlogpost);
 
+router.route('/posts/slug/:slug').get(getBlogpostById);
+
 router.route('/meta').get(getBlogpostsMeta).post(getBlogpostMetaByTag);
 
 export default router;
