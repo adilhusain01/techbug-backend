@@ -3,18 +3,22 @@ import {
   createBlogpost,
   deleteBlogpost,
   getBlogpostById,
+  getBlogpostMetaByTag,
   getBlogposts,
+  getBlogpostsMeta,
   updateBlogpost,
 } from '../controllers/blogpostController.js';
 
 const router = express.Router();
 
-router.route('/').get(getBlogposts).post(createBlogpost);
+router.route('/posts').get(getBlogposts).post(createBlogpost);
 
 router
-  .route('/:id')
+  .route('/posts/:id')
   .get(getBlogpostById)
   .put(updateBlogpost)
   .delete(deleteBlogpost);
+
+router.route('/meta').get(getBlogpostsMeta).post(getBlogpostMetaByTag);
 
 export default router;

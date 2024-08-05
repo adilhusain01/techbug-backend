@@ -14,6 +14,41 @@ export const getBlogposts = async (req, res) => {
   }
 };
 
+export const getBlogpostsMeta = async (req, res) => {
+  try {
+    const posts = await Blogpost.find({}, 'thumbnail title author updatedAt')
+      .sort({ updatedAt: -1 })
+      .limit(10);
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getBlogpostMetaByTag = async (req, res) => {
+  try {
+    const { tags } = req.body;
+
+    if (!tags || !Array.isArray(tags) || tags.length === 0) {
+      return res.status(400).json({
+        message: 'Tags are required and should be an array',
+      });
+    }
+
+    const posts = await Blogpost.find(
+      { tags: { $in: tags } },
+      'thumbnail title author updatedAt'
+    );
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 export const getBlogpostById = async (req, res) => {
   try {
     const { id } = req.params;
