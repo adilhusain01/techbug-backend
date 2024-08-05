@@ -3,6 +3,7 @@ import {
   createBlogpost,
   deleteBlogpost,
   getBlogpostById,
+  getBlogpostBySlug,
   getBlogpostMetaByTag,
   getBlogposts,
   getBlogpostsMeta,
@@ -19,7 +20,7 @@ router
   .put(updateBlogpost)
   .delete(deleteBlogpost);
 
-router.route('/posts/slug/:slug').get(getBlogpostById);
+router.route('/posts/slug/:slug').get(getBlogpostBySlug);
 
 router.route('/meta').get(getBlogpostsMeta).post(getBlogpostMetaByTag);
 
