@@ -55,7 +55,7 @@ export const getBlogpostById = async (req, res) => {
 
     if (!id) return res.status(400).json({ message: 'ID is required' });
 
-    const post = await Blogpost.findOne({ $or: [{ _id: id }, { slug: id }] });
+    const post = await Blogpost.findOne({ $or: [{ slug: id }, { _id: id }] });
 
     if (!post) return res.status(404).json({ message: 'Blog post not found' });
 
