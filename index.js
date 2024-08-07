@@ -6,15 +6,15 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import { logger } from './middleware/logEvents.js';
 
-//Route Imports
 import cardRoute from './routes/cardRoute.js';
 import testimonialRoute from './routes/testimonialRoute.js';
 import contactRoute from './routes/contactRoute.js';
 import serviceRoute from './routes/serviceRoute.js';
 import workRoute from './routes/workRoute.js';
 import authRoute from './routes/authRoute.js';
-import blogpostRoute from './routes/blogpostRoute.js';
 import newsRoute from './routes/newsRoute.js';
+import tagRoute from './routes/tagRoute.js';
+import blogpostRoute from './routes/blogpostRoute.js';
 
 const PORT = process.env.PORT;
 
@@ -35,6 +35,7 @@ app.use('/v1/api/contact', contactRoute);
 app.use('/v1/api/services', serviceRoute);
 app.use('/v1/api/works', workRoute);
 app.use('/v1/api/news', newsRoute);
+app.use('/v1/api/tags', tagRoute);
 app.use('/v1/api/blogposts', blogpostRoute);
 app.use('/v1/api/auth', authRoute);
 

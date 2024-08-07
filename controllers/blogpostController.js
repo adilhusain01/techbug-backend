@@ -1,4 +1,5 @@
 import Blogpost from '../model/blogpost.js';
+import Tag from '../model/tag.js';
 
 export const getBlogposts = async (req, res) => {
   try {
@@ -19,7 +20,9 @@ export const getBlogpostsMeta = async (req, res) => {
     const posts = await Blogpost.find(
       {},
       'thumbnail title author updatedAt slug'
-    ).sort({ updatedAt: -1 });
+    )
+      .sort({ updatedAt: -1 })
+      .limit(15);
 
     res.status(200).json(posts);
   } catch (error) {
@@ -38,12 +41,12 @@ export const getBlogpostMetaByTag = async (req, res) => {
       });
     }
 
-    const tagsArray = tags.split('-');
+    const tagsArray = tags.split('-').map((tag) => tag.toLowerCase());
 
     const posts = await Blogpost.find(
       { tags: { $in: tagsArray } },
       'thumbnail title author updatedAt slug'
-    );
+    ).limit(15);
 
     res.status(200).json(posts);
   } catch (error) {
@@ -107,12 +110,22 @@ export const createBlogpost = async (req, res) => {
       .toLowerCase()
       .replace(/[^a-zA-Z0-9-]/g, '-');
 
+    const tagsArray = tags.map((tag) => tag.toLowerCase());
+
+    for (const tag of tagsArray) {
+      const existingTag = await Tag.findOne({ name: tag });
+      if (!existingTag) {
+        const newTag = new Tag({ name: tag });
+        await newTag.save();
+      }
+    }
+
     const newPost = new Blogpost({
       title,
       description,
       author,
       thumbnail,
-      tags,
+      tags: tagsArray,
       body,
       slug,
     });
@@ -143,9 +156,23 @@ export const updateBlogpost = async (req, res) => {
           .replace(/[^a-zA-Z0-9-]/g, '-')
       : undefined;
 
+    const tagsArray = updates.tags
+      ? updates.tags.map((tag) => tag.toLowerCase())
+      : undefined;
+
+    if (tagsArray) {
+      for (const tag of tagsArray) {
+        const existingTag = await Tag.findOne({ name: tag });
+        if (!existingTag) {
+          const newTag = new Tag({ name: tag });
+          await newTag.save();
+        }
+      }
+    }
+
     const updatedPost = await Blogpost.findByIdAndUpdate(
       id,
-      { ...updates, slug, updatedAt: new Date() },
+      { ...updates, tags: tagsArray, slug, updatedAt: new Date() },
       {
         new: true,
         runValidators: true,
