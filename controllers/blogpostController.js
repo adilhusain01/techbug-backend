@@ -175,7 +175,7 @@ export const deleteBlogpost = async (req, res) => {
     if (!deletedPost)
       return res.status(404).json({ message: 'Blog post not found' });
 
-    res.status(204).json({ message: 'Blog post deleted successfully' });
+    res.status(204).json();
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });

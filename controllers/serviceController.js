@@ -69,7 +69,7 @@ export const deleteService = async (req, res) => {
     if (!deletedService)
       return res.status(404).json({ message: 'Service not found' });
 
-    res.status(204).json({ message: 'Service deleted successfully' });
+    res.status(204).json();
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });

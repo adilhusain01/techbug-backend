@@ -85,7 +85,7 @@ export const deleteWork = async (req, res) => {
     if (!deletedWork)
       return res.status(404).json({ message: 'Work not found' });
 
-    res.status(204).json({ message: 'Work deleted successfully' });
+    res.status(204).json();
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });

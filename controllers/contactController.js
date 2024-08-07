@@ -49,7 +49,7 @@ export const deleteContact = async (req, res) => {
     if (!deletedContact)
       return res.status(404).json({ message: 'Contact not found' });
 
-    res.status(204).json({ message: 'Contact deleted successfully' });
+    res.status(204).json();
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });

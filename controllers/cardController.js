@@ -68,7 +68,7 @@ export const deleteCard = async (req, res) => {
     if (!deletedCard)
       return res.status(404).json({ message: 'Card not found' });
 
-    res.status(204).json({ message: 'Card deleted successfully' });
+    res.status(204).json();
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });

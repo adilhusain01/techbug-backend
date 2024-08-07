@@ -14,6 +14,7 @@ import serviceRoute from './routes/serviceRoute.js';
 import workRoute from './routes/workRoute.js';
 import authRoute from './routes/authRoute.js';
 import blogpostRoute from './routes/blogpostRoute.js';
+import newsRoute from './routes/newsRoute.js';
 
 const PORT = process.env.PORT;
 
@@ -33,6 +34,7 @@ app.use('/v1/api/testimonials', testimonialRoute);
 app.use('/v1/api/contact', contactRoute);
 app.use('/v1/api/services', serviceRoute);
 app.use('/v1/api/works', workRoute);
+app.use('/v1/api/news', newsRoute);
 app.use('/v1/api/blogposts', blogpostRoute);
 app.use('/v1/api/auth', authRoute);
 
