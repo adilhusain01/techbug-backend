@@ -98,17 +98,17 @@ export const createBlogpost = async (req, res) => {
         message: 'Title, description, author, thumbnail, and body are required',
       });
 
-    const existingPost = await Blogpost.findOne({ title });
-    if (existingPost)
-      return res.status(400).json({
-        message: 'A blog post with this title already exists',
-      });
-
     const slug = title
       .split(' ')
       .join('-')
       .toLowerCase()
       .replace(/[^a-zA-Z0-9-]/g, '-');
+
+    const existingPost = await Blogpost.findOne({ slug });
+    if (existingPost)
+      return res.status(400).json({
+        message: 'A blog post with this title already exists',
+      });
 
     for (const tag of tags) {
       const existingTag = await Tag.findOne({ name: tag });
