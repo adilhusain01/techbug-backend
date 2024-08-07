@@ -41,7 +41,7 @@ export const getBlogpostMetaByTag = async (req, res) => {
       });
     }
 
-    const tagsArray = tags.split('-').map((tag) => tag.toLowerCase());
+    const tagsArray = tags.split('-');
 
     const posts = await Blogpost.find(
       { tags: { $in: tagsArray } },
@@ -110,9 +110,7 @@ export const createBlogpost = async (req, res) => {
       .toLowerCase()
       .replace(/[^a-zA-Z0-9-]/g, '-');
 
-    const tagsArray = tags.map((tag) => tag.toLowerCase());
-
-    for (const tag of tagsArray) {
+    for (const tag of tags) {
       const existingTag = await Tag.findOne({ name: tag });
       if (!existingTag) {
         const newTag = new Tag({ name: tag });
@@ -125,7 +123,7 @@ export const createBlogpost = async (req, res) => {
       description,
       author,
       thumbnail,
-      tags: tagsArray,
+      tags,
       body,
       slug,
     });
@@ -156,9 +154,7 @@ export const updateBlogpost = async (req, res) => {
           .replace(/[^a-zA-Z0-9-]/g, '-')
       : undefined;
 
-    const tagsArray = updates.tags
-      ? updates.tags.map((tag) => tag.toLowerCase())
-      : undefined;
+    const tagsArray = updates.tags ? updates.tags : undefined;
 
     if (tagsArray) {
       for (const tag of tagsArray) {
@@ -172,7 +168,7 @@ export const updateBlogpost = async (req, res) => {
 
     const updatedPost = await Blogpost.findByIdAndUpdate(
       id,
-      { ...updates, tags: tagsArray, slug, updatedAt: new Date() },
+      { ...updates, slug, updatedAt: new Date() },
       {
         new: true,
         runValidators: true,

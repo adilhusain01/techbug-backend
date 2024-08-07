@@ -19,8 +19,6 @@ export const createTag = async (req, res) => {
 
     if (!name) return res.status(400).json({ message: 'name are required' });
 
-    name = name.toLowerCase();
-
     const newTag = new Tag({
       name,
     });
@@ -37,8 +35,6 @@ export const updateTag = async (req, res) => {
   try {
     const { id } = req.params;
     var { name } = req.body;
-
-    name = name.toLowerCase();
 
     const updatedTag = await Tag.findByIdAndUpdate(
       id,
