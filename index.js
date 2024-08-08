@@ -14,6 +14,7 @@ import workRoute from './routes/workRoute.js';
 import authRoute from './routes/authRoute.js';
 import newsRoute from './routes/newsRoute.js';
 import tagRoute from './routes/tagRoute.js';
+import newsLetterRoute from './routes/newsLetterRoute.js';
 import blogpostRoute from './routes/blogpostRoute.js';
 
 const PORT = process.env.PORT;
@@ -36,6 +37,7 @@ app.use('/v1/api/services', serviceRoute);
 app.use('/v1/api/works', workRoute);
 app.use('/v1/api/news', newsRoute);
 app.use('/v1/api/tags', tagRoute);
+app.use('/v1/api/newsletters', newsLetterRoute);
 app.use('/v1/api/blogposts', blogpostRoute);
 app.use('/v1/api/auth', authRoute);
 
