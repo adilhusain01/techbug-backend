@@ -21,7 +21,7 @@ export const createNewsLetter = async (req, res) => {
     if (!email || !topics)
       return res.status(400).json({ message: 'email and topics are required' });
 
-    const existingNewsLetter = await Blogpost.findOne({ email });
+    const existingNewsLetter = await NewsLetter.findOne({ email });
     if (existingNewsLetter)
       return res.status(400).json({
         message: 'Email already exists',
