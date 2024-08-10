@@ -2,7 +2,7 @@ import Tag from '../model/tag.js';
 
 export const getTags = async (req, res) => {
   try {
-    const tags = await Tag.find().limit(8);
+    const tags = await Tag.find();
 
     if (!tags.length) return res.status(204).json({ message: 'No tags found' });
 
