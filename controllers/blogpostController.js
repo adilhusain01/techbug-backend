@@ -20,9 +20,7 @@ export const getBlogpostsMeta = async (req, res) => {
     const posts = await Blogpost.find(
       {},
       'thumbnail title author updatedAt slug'
-    )
-      .sort({ updatedAt: -1 })
-      .limit(15);
+    ).sort({ updatedAt: -1 });
 
     res.status(200).json(posts);
   } catch (error) {
