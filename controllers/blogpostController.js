@@ -89,7 +89,7 @@ export const getBlogpostBySlug = async (req, res) => {
 
 export const createBlogpost = async (req, res) => {
   try {
-    const { title, description, author, thumbnail, tags, body, draft } =
+    const { title, description, author, thumbnail, tags, body, published } =
       req.body;
 
     if (!title || !description || !author || !thumbnail || !body)
@@ -125,7 +125,7 @@ export const createBlogpost = async (req, res) => {
       tags,
       body,
       slug,
-      draft,
+      published,
     });
 
     const savedPost = await newPost.save();
