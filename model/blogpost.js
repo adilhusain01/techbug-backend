@@ -27,6 +27,7 @@ const blogpostSchema = new mongoose.Schema(
 
     updatedAt: {
       type: Date,
+      default: Date.now,
     },
 
     thumbnail: {
@@ -43,6 +44,12 @@ const blogpostSchema = new mongoose.Schema(
     body: {
       type: String,
       required: true,
+    },
+
+    slug: {
+      type: String,
+      required: true,
+      trim: true,
     },
   },
   { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } }
