@@ -89,7 +89,8 @@ export const getBlogpostBySlug = async (req, res) => {
 
 export const createBlogpost = async (req, res) => {
   try {
-    const { title, description, author, thumbnail, tags, body } = req.body;
+    const { title, description, author, thumbnail, tags, body, draft } =
+      req.body;
 
     if (!title || !description || !author || !thumbnail || !body)
       return res.status(400).json({
@@ -124,6 +125,7 @@ export const createBlogpost = async (req, res) => {
       tags,
       body,
       slug,
+      draft,
     });
 
     const savedPost = await newPost.save();
