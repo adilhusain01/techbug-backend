@@ -2,7 +2,7 @@ import Blogpost from '../model/blogpost.js';
 
 export const getBlogposts = async (req, res) => {
   try {
-    const posts = await Blogpost.find();
+    const posts = await Blogpost.find({ published: true });
 
     if (!posts.length)
       return res.status(404).json({ message: 'No blog posts found' });
@@ -15,6 +15,20 @@ export const getBlogposts = async (req, res) => {
 };
 
 export const getBlogpostsMeta = async (req, res) => {
+  try {
+    const posts = await Blogpost.find(
+      { published: true },
+      'thumbnail title author updatedAt slug published'
+    ).sort({ updatedAt: -1 });
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getBlogpostsMetaAll = async (req, res) => {
   try {
     const posts = await Blogpost.find(
       {},
@@ -41,7 +55,7 @@ export const getBlogpostMetaByTag = async (req, res) => {
     const tagsArray = tags.split('-');
 
     const posts = await Blogpost.find(
-      { tags: { $in: tagsArray } },
+      { tags: { $in: tagsArray }, published: true },
       'thumbnail title author updatedAt slug published'
     ).limit(15);
 
@@ -58,7 +72,24 @@ export const getBlogpostById = async (req, res) => {
 
     if (!id) return res.status(400).json({ message: 'ID is required' });
 
-    const post = await Blogpost.findById(id);
+    const post = await Blogpost.findById({ _id: id, published: true });
+
+    if (!post) return res.status(404).json({ message: 'Blog post not found' });
+
+    res.json(post);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getBlogpostByIdAll = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) return res.status(400).json({ message: 'ID is required' });
+
+    const post = await Blogpost.findById({ _id: id });
 
     if (!post) return res.status(404).json({ message: 'Blog post not found' });
 
@@ -75,7 +106,7 @@ export const getBlogpostBySlug = async (req, res) => {
 
     if (!slug) return res.status(400).json({ message: 'Slug is required' });
 
-    const post = await Blogpost.findOne({ slug: slug });
+    const post = await Blogpost.findOne({ slug: slug, published: true });
 
     if (!post) return res.status(404).json({ message: 'Blog post not found' });
 
