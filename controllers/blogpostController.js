@@ -154,8 +154,6 @@ export const updateBlogpost = async (req, res) => {
           .replace(/[^a-zA-Z0-9-]/g, '-')
       : undefined;
 
-    const tagsArray = updates.tags ? updates.tags : undefined;
-
     const updatedPost = await Blogpost.findByIdAndUpdate(
       id,
       { ...updates, slug, updatedAt: new Date() },
