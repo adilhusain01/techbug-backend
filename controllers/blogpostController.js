@@ -19,7 +19,7 @@ export const getBlogpostsMeta = async (req, res) => {
   try {
     const posts = await Blogpost.find(
       {},
-      'thumbnail title author updatedAt slug'
+      'thumbnail title author updatedAt slug published'
     ).sort({ updatedAt: -1 });
 
     res.status(200).json(posts);
@@ -43,7 +43,7 @@ export const getBlogpostMetaByTag = async (req, res) => {
 
     const posts = await Blogpost.find(
       { tags: { $in: tagsArray } },
-      'thumbnail title author updatedAt slug'
+      'thumbnail title author updatedAt slug published'
     ).limit(15);
 
     res.status(200).json(posts);
