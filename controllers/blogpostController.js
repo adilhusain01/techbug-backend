@@ -92,10 +92,19 @@ export const createBlogpost = async (req, res) => {
     const { title, description, author, thumbnail, tags, body, published } =
       req.body;
 
-    if (!title || !description || !author || !thumbnail || !body)
+    if (
+      published === true &&
+      (!title || !description || !author || !thumbnail || !body)
+    ) {
       return res.status(400).json({
         message: 'Title, description, author, thumbnail, and body are required',
       });
+    } else {
+      if (!title)
+        return res.status(400).json({
+          message: 'Draft post can not be empty',
+        });
+    }
 
     const slug = title
       .split(' ')
