@@ -96,12 +96,12 @@ export const createBlogpost = async (req, res) => {
       (!title || !description || !author || !thumbnail || !body)
     ) {
       return res.status(400).json({
-        message: 'Title, description, author, thumbnail, and body are required',
+        message: 'title, description, author, thumbnail, and body are required',
       });
     } else {
       if (!title || !thumbnail)
         return res.status(400).json({
-          message: 'Title & Thumbnail is required',
+          message: 'title & Thumbnail is required',
         });
     }
 
