@@ -28,8 +28,8 @@ router.route('/posts/slug/:slug').get(getBlogpostBySlug);
 router.get('/meta', getBlogpostsMeta);
 router.get('/meta/:tags', getBlogpostMetaByTag);
 
-//for the dashboard
-router.get('/meta/all', getBlogpostsMetaAll);
+//for the dashboard all published and unpublished ones
+router.get('/allmeta', getBlogpostsMetaAll);
 router.get('/posts/all/:id', getBlogpostByIdAll);
 
 export default router;
