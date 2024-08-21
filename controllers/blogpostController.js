@@ -100,9 +100,9 @@ export const createBlogpost = async (req, res) => {
         message: 'Title, description, author, thumbnail, and body are required',
       });
     } else {
-      if (!title)
+      if (!title || !thumbnail)
         return res.status(400).json({
-          message: 'Draft post can not be empty',
+          message: 'Title & Thumbnail is required',
         });
     }
 
