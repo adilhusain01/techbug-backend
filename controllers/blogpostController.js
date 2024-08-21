@@ -1,5 +1,4 @@
 import Blogpost from '../model/blogpost.js';
-import Tag from '../model/tag.js';
 
 export const getBlogposts = async (req, res) => {
   try {
@@ -118,14 +117,6 @@ export const createBlogpost = async (req, res) => {
         message: 'A blog post with this title already exists',
       });
 
-    for (const tag of tags) {
-      const existingTag = await Tag.findOne({ name: tag });
-      if (!existingTag) {
-        const newTag = new Tag({ name: tag });
-        await newTag.save();
-      }
-    }
-
     const newPost = new Blogpost({
       title,
       description,
@@ -165,16 +156,6 @@ export const updateBlogpost = async (req, res) => {
 
     const tagsArray = updates.tags ? updates.tags : undefined;
 
-    if (tagsArray) {
-      for (const tag of tagsArray) {
-        const existingTag = await Tag.findOne({ name: tag });
-        if (!existingTag) {
-          const newTag = new Tag({ name: tag });
-          await newTag.save();
-        }
-      }
-    }
-
     const updatedPost = await Blogpost.findByIdAndUpdate(
       id,
       { ...updates, slug, updatedAt: new Date() },
@@ -187,7 +168,7 @@ export const updateBlogpost = async (req, res) => {
     if (!updatedPost)
       return res.status(404).json({ message: 'Blog post not found' });
 
-    res.json(updatedPost);
+    res.status(200).json(updatedPost);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
