@@ -83,23 +83,6 @@ export const getBlogpostById = async (req, res) => {
   }
 };
 
-export const getBlogpostByIdAll = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    if (!id) return res.status(400).json({ message: 'ID is required' });
-
-    const post = await Blogpost.findById({ _id: id });
-
-    if (!post) return res.status(404).json({ message: 'Blog post not found' });
-
-    res.json(post);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
 export const getBlogpostBySlug = async (req, res) => {
   try {
     const { slug } = req.params;

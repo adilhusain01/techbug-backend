@@ -3,7 +3,6 @@ import {
   createBlogpost,
   deleteBlogpost,
   getBlogpostById,
-  getBlogpostByIdAll,
   getBlogpostBySlug,
   getBlogpostMetaByTag,
   getBlogposts,
@@ -24,12 +23,11 @@ router
   .delete(deleteBlogpost);
 router.route('/posts/slug/:slug').get(getBlogpostBySlug);
 
-//only some content of a post
+//only enough content of a post
 router.get('/meta', getBlogpostsMeta);
 router.get('/meta/:tags', getBlogpostMetaByTag);
 
 //for the dashboard all published and unpublished ones
 router.get('/allmeta', getBlogpostsMetaAll);
-router.get('/posts/all/:id', getBlogpostByIdAll);
 
 export default router;
