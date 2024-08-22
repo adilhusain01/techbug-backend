@@ -15,6 +15,7 @@ import authRoute from './routes/authRoute.js';
 import tagRoute from './routes/tagRoute.js';
 import newsLetterRoute from './routes/newsLetterRoute.js';
 import blogpostRoute from './routes/blogpostRoute.js';
+import userRoute from './routes/userRoute.js';
 
 const PORT = process.env.PORT;
 
@@ -37,6 +38,7 @@ app.use('/v1/api/works', workRoute);
 app.use('/v1/api/tags', tagRoute);
 app.use('/v1/api/newsletters', newsLetterRoute);
 app.use('/v1/api/blogposts', blogpostRoute);
+app.use('/v1/api/users', userRoute);
 app.use('/v1/api/auth', authRoute);
 
 mongoose.connection.once('open', () => {
