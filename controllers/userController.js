@@ -1,4 +1,5 @@
 import User from '../model/user.js';
+const bcrypt = require('bcrypt');
 
 export const getUsers = async (req, res) => {
   try {
@@ -22,13 +23,21 @@ export const createUser = async (req, res) => {
     if (!first_name || !last_name || !username || !email || !phone || !password)
       return res.status(400).json({ message: 'All fields are required' });
 
+    const existingUser = await User.findOne({ email, username }).exec();
+    if (existingUser)
+      return res.status(400).json({
+        message: 'email or username already exists',
+      });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = new User({
       first_name,
       last_name,
       username,
       email,
       phone,
-      password,
+      password: hashedPassword,
       roles,
     });
 
@@ -46,9 +55,19 @@ export const updateUser = async (req, res) => {
     const { first_name, last_name, username, email, phone, password, roles } =
       req.body;
 
+    if (password.length) password = await bcrypt.hash(password, 10);
+
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { first_name, last_name, username, email, phone, password, roles },
+      {
+        first_name,
+        last_name,
+        username,
+        email,
+        phone,
+        password,
+        roles,
+      },
       { new: true, runValidators: true }
     );
 
