@@ -3,7 +3,7 @@ import { handleLogin, handleLogout } from '../controllers/authController';
 
 const router = express.Router();
 
-router.route('/login').post(handleLogin);
 router.route('/logout').post(handleLogout);
+router.route('/login').post(handleLogin);
 
 export default router;
