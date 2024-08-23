@@ -49,7 +49,6 @@ app.use('/v1/api/blogposts', blogpostRoute);
 app.use('/v1/api/users', userRoute);
 app.use('/v1/api/auth', authRoute);
 app.use('/v1/api/refresh', refreshRoute);
-import allowedOrigins from '../config/allowedOrigins';
 app.all('*', (req, res) => {
   res.status(404).json({ error: '404 Not Found' });
 });
