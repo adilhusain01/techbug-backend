@@ -18,7 +18,6 @@ router.route('/posts').get(getBlogposts).post(createBlogpost);
 router
   .route('/posts/:id')
   .get(getBlogpostById)
-  .get(getBlogpostByIdAll)
   .put(updateBlogpost)
   .delete(deleteBlogpost);
 router.route('/posts/slug/:slug').get(getBlogpostBySlug);
