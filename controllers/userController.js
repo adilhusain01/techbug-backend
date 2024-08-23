@@ -32,8 +32,16 @@ export const getUserById = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const { first_name, last_name, username, email, phone, password, roles } =
-      req.body;
+    const {
+      first_name,
+      last_name,
+      username,
+      email,
+      phone,
+      password,
+      roles,
+      refreshToken,
+    } = req.body;
 
     if (!first_name || !last_name || !username || !email || !phone || !password)
       return res.status(400).json({ message: 'All fields are required' });
@@ -54,6 +62,7 @@ export const createUser = async (req, res) => {
       phone,
       password: hashedPassword,
       roles,
+      refreshToken,
     });
 
     const savedUser = await newUser.save();
@@ -67,10 +76,18 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { first_name, last_name, username, email, phone, password, roles } =
-      req.body;
+    const {
+      first_name,
+      last_name,
+      username,
+      email,
+      phone,
+      password,
+      roles,
+      refreshToken,
+    } = req.body;
 
-    if (password.length) password = await bcrypt.hash(password, 10);
+    if (password?.length) password = await bcrypt.hash(password, 10);
 
     const updatedUser = await User.findByIdAndUpdate(
       id,
@@ -82,6 +99,7 @@ export const updateUser = async (req, res) => {
         phone,
         password,
         roles,
+        refreshToken,
       },
       { new: true, runValidators: true }
     );
