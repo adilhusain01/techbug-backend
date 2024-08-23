@@ -38,6 +38,9 @@ const userSchema = new mongoose.Schema({
     Manager: Number,
     Admin: Number,
   },
+  refreshToken: {
+    type: String,
+  },
 });
 
 const User = mongoose.model('User', userSchema);

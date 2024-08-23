@@ -1,5 +1,5 @@
 import User from '../model/user.js';
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 export const getUsers = async (req, res) => {
   try {
@@ -9,6 +9,21 @@ export const getUsers = async (req, res) => {
       return res.status(204).json({ message: 'No users found' });
 
     res.json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+export const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.find(id);
+
+    if (!user.length)
+      return res.status(204).json({ message: 'User not found' });
+
+    res.json(user);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal Server Error' });

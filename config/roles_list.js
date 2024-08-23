@@ -4,4 +4,4 @@ const ROLES_LIST = {
   Editor: 101520,
 };
 
-module.exports = ROLES_LIST;
+export default ROLES_LIST;

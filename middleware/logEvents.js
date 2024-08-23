@@ -4,7 +4,6 @@ import fs from 'fs';
 import { promises as fsPromises } from 'fs';
 import path from 'path';
 
-// Utility function to get the directory name of the current module
 const getDirname = () => {
   return path.dirname(new URL(import.meta.url).pathname);
 };
