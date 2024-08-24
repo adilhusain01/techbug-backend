@@ -1,6 +1,23 @@
 import User from '../model/user.js';
 import bcrypt from 'bcrypt';
 
+export const getUsersMeta = async (req, res) => {
+  try {
+    const users = await User.find(
+      {},
+      'first_name last_name email roles createdAt'
+    );
+
+    if (!users.length)
+      return res.status(204).json({ message: 'No users found' });
+
+    res.json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 export const getUsers = async (req, res) => {
   try {
     const users = await User.find();
