@@ -71,7 +71,7 @@ export const createUser = async (req, res) => {
     )
       return res.status(400).json({ message: 'All fields are required' });
 
-    const existingUser = await User.findOne({ email, username }).exec();
+    const existingUser = await User.findOne({ email, username, phone }).exec();
     if (existingUser)
       return res.status(400).json({
         message: 'email or username already exists',
