@@ -130,12 +130,12 @@ export const updateUser = async (req, res) => {
 
     if (password?.length) password = await bcrypt.hash(password, 10);
 
-    let selectedRole;
-    if (roles === 'Admin')
-      selectedRole = { Admin: 101520, Manager: 152025, Editor: 202530 };
-    else if (roles === 'Manager')
-      selectedRole = { Manager: 152025, Editor: 202530 };
-    else selectedRole = { Editor: 202530 };
+    if (roles) {
+      if (roles === 'Admin')
+        roles = { Admin: 101520, Manager: 152025, Editor: 202530 };
+      else if (roles === 'Manager') roles = { Manager: 152025, Editor: 202530 };
+      else roles = { Editor: 202530 };
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
       id,
@@ -146,7 +146,7 @@ export const updateUser = async (req, res) => {
         email,
         phone,
         password,
-        roles: selectedRole,
+        roles,
         refreshToken,
       },
       { new: true, runValidators: true }
