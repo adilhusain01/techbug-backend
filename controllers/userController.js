@@ -5,7 +5,7 @@ export const getUsersMeta = async (req, res) => {
   try {
     const users = await User.find(
       {},
-      'first_name last_name email roles createdAt'
+      'first_name last_name username email roles createdAt'
     );
 
     if (!users.length)
