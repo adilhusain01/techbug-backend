@@ -71,11 +71,20 @@ export const createUser = async (req, res) => {
     )
       return res.status(400).json({ message: 'All fields are required' });
 
-    const existingUser = await User.findOne({ email, username, phone }).exec();
-    if (existingUser)
-      return res.status(400).json({
-        message: 'email, username or phone already exists',
-      });
+    const emailExists = await User.findOne({ email }).exec();
+    if (emailExists) {
+      return res.status(400).json({ message: 'Email already exists' });
+    }
+
+    const usernameExists = await User.findOne({ username }).exec();
+    if (usernameExists) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    const phoneExists = await User.findOne({ phone }).exec();
+    if (phoneExists) {
+      return res.status(400).json({ message: 'Phone number already exists' });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
