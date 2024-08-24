@@ -60,7 +60,15 @@ export const createUser = async (req, res) => {
       refreshToken,
     } = req.body;
 
-    if (!first_name || !last_name || !username || !email || !phone || !password)
+    if (
+      !first_name ||
+      !last_name ||
+      !username ||
+      !email ||
+      !phone ||
+      !password ||
+      !roles
+    )
       return res.status(400).json({ message: 'All fields are required' });
 
     const existingUser = await User.findOne({ email, username }).exec();
@@ -71,6 +79,13 @@ export const createUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    let selectedRole;
+    if (roles === 'Admin')
+      selectedRole = { Admin: 101520, Manager: 152025, Editor: 202530 };
+    else if (roles === 'Manager')
+      selectedRole = { Manager: 152025, Editor: 202530 };
+    else selectedRole = { Editor: 202530 };
+
     const newUser = new User({
       first_name,
       last_name,
@@ -78,7 +93,7 @@ export const createUser = async (req, res) => {
       email,
       phone,
       password: hashedPassword,
-      roles,
+      roles: selectedRole,
       refreshToken,
     });
 
@@ -106,6 +121,13 @@ export const updateUser = async (req, res) => {
 
     if (password?.length) password = await bcrypt.hash(password, 10);
 
+    let selectedRole;
+    if (roles === 'Admin')
+      selectedRole = { Admin: 101520, Manager: 152025, Editor: 202530 };
+    else if (roles === 'Manager')
+      selectedRole = { Manager: 152025, Editor: 202530 };
+    else selectedRole = { Editor: 202530 };
+
     const updatedUser = await User.findByIdAndUpdate(
       id,
       {
@@ -115,7 +137,7 @@ export const updateUser = async (req, res) => {
         email,
         phone,
         password,
-        roles,
+        roles: selectedRole,
         refreshToken,
       },
       { new: true, runValidators: true }
